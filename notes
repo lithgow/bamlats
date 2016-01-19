@@ -1,0 +1,114 @@
+## Day One
+
+# add node to package manager
+# https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# install typescript
+sudo npm install -g typescript
+tsc --version
+
+# serve current folder as website
+sudo npm install -g node-static
+static .
+
+# Typescript requires compilation
+tsc --target ES5 code.ts
+
+lib.d.ts contains lots of standard stuff, e.g. console
+The .d specifies that it's a description file, equivalent to .h header file in C - i.e. it's info only
+mostly interfaces, sometimes classes, sometimes functions
+
+# install tsd
+sudo npm install -g tsd
+
+# install jquery
+tsd install jquery --save
+
+javascript doesn't have a global namespace, it has a global object - window
+vars are actually added to window, i.e. window.xxx
+so you can overwrite e.g. console if you're not careful
+
+inside a function with the word function, 'this' always points tot the context in which the function runs
+inside an arrow function () => {} , 'this' refers to the context in which it was declared (hence in the equivalent js we see 'var self = this;')
+this allows us to then pass the funtion, e.g. '$(myVM.render);' instead of '$(function() = {myVM.render()});'
+
+external <script> refs shouldn't specify http or https, as if you use http and the rest of the page is https then you've given someone the opportunity to execute non-trusted code within a trusted context (as you're saying you trust me and I trust Google, but with http you can't guarantee it's Google). Yet specifying https will break for localhost as you probably don't have a cert. Hence // was introduced which will use http or https depending on which is being used already, e.g.
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+tsd install angular --resolve
+
+Angular is Model-View-Controller (or Model-View-Whatever as they call it)
+
+var myDemo = angular.module('myDemo', []); // if you don't pass the array, angular will try to find the module and crash if it doesn't exist
+
+Anything beginning $$ is "private" to Angular
+
+angular has directives for things like form, input, etc - it's important to remember that angular does this and it's not just the plan old html version
+
+# --save-dev puts the package into the dev dependencies for the project you're in, rather than installing it globally
+
+npm install -g gulp
+npm install --save-dev gulp
+npm install --save-dev gulp-typescript
+
+in gulp, the pipeline runs in memory and is then written to disk at the end, vs grunt which writes to disk at end of each step
+
+# run the 'typescript' task (before we set it to be the default task)
+gulp typescript
+
+npm install -g karma-cli
+
+npm install --save-dev karma
+npm install --save-dev phantom-js
+npm install --save-dev karma-phantomjs-launcher
+npm install --save-dev jasmine-core
+
+karma init
+# Answer the questions as follows:
+#   Testing Framework - jasmine
+#   Use Require.js - No (we do but angular won't let us)
+#   Capture browsers automatically - PhantomJS
+#   Files to include - demo.js, test/**/*.spec
+#   Should karma watch all files and run on change - No
+# then in karma.conf.js, set:
+#   files: [
+#     'http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js'
+#     'demo.js'
+#     'test/**/*Spec.js'
+#   ]
+#   singleRun: true
+
+karma start
+
+/* global describe, it */      // tells karma that there are things called describe and it in the global namespace (which there are because jasmine defined them)
+
+npm install -g bower
+
+## Day two
+
+# run from project base dir and will install all node dependencies (from package.json)
+npm install 
+
+# run from project base dir to install all bower components (from bower.json)
+bower install
+
+bootswatch.com - free bootstrap themes
+
+# serve site in a local server (will run on localhost:3000)
+node index.js
+
+# run gulp watch task to watch our files and recompile ts, run tests, reserve, etc on change
+gulp watch
+
+
+filters allow us to apply a filter to all values (e.g. transform the format of all dates) or to filter all values (e.g. get a subset of all dates)
+
+
+
+
+
+
+
+
