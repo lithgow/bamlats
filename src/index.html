@@ -9,19 +9,28 @@
     <link href="/css/todos.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-fixed-top navbar-default">
+    <!-- bootstrap navbar, fixed to the top of the screen -->
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+        <!-- core bootstrap class - creates layout of different size depending on browser window and screen resolution, etc -->
+        <!-- pulls everything to middle of screen on big screens -->
         <div class="container">
+            <!-- directive supplied by ui-router -->
+            <!-- a placeholder for the href attribute, i.e. the link -->
+            <!-- the directive asks the state service for the url of the root scope -->
             <a ui-sref="root" class="navbar-brand">ToDos</a>
 
             <ul class="nav navbar-nav">
+                <!-- lazy way of saying when state of 'a' underneath is active, set this class ('active') -->
+                <!-- this is what darkens the background of the active state in the navbar -->
                 <li ui-sref-active="active">
+                    <!-- constructs url from combination of root url plus this -->
                     <a ui-sref="root.todos">List</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <ui-view name="messages"></ui-view>
+    <ui-view name="errors"></ui-view>
 
     <ui-view></ui-view>
 

@@ -16,8 +16,7 @@ namespace ToDos {
 
     filterModule.filter('moment', (locale: LocaleService) => {
 
-        //console.log(locale());
-
+        // the name of this filter function doesn't matter as it's not used, BUT if it throws an error we will see the name at runtime
         return function momentFilter(input, format) {
 
             if (format === 'short') {

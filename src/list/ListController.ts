@@ -1,26 +1,20 @@
 /// <reference path="module.ts" />
+// need the above line as otherwise ListController will be read prior to module.ts by the gulp typescript compilation step (as it uses alphabetical order)
 
 namespace ToDos {
-
-    interface ToDoItem {
-        id: string;
-        text: string;
-        due: string;
-        created: string;
-        done: string;
-        tags: string[];
-    }
 
     class ListController {
         public todoList: ToDoItem[];
 
-        constructor($http: angular.IHttpService) {
-
-            $http.get<ToDoItem[]>('/api/todos')
-                .then((response) => {
-                    this.todoList = response.data;
+        constructor(todoService: ToDoService, errors: ErrorService) {
+            todoService.list()
+                .then((list) => {
+                    this.todoList = list;
+                    errors.push({message: 'Test message', level: 'warning'});
+                })
+                .catch((error) => {
+                    errors.push(error);
                 });
-
         }
 
         public isOverdue(item: ToDoItem): boolean {
@@ -28,9 +22,8 @@ namespace ToDos {
             let due = moment.utc(item.due, '');
             return due.isBefore(moment.utc());
         }
-
     }
 
-    listModule.controller('ListController', ListController);
+    listModule.controller('ListController', ListController)
 
 }
