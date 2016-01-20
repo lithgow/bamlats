@@ -8,7 +8,8 @@ namespace ToDos {
 
         constructor(private todoService: ToDoService,
                     errors: ErrorService,
-                    private $timeout: angular.ITimeoutService,
+                    //private $timeout: angular.ITimeoutService,
+                    private $state: angular.ui.IStateService,
                     private $modal: angular.ui.bootstrap.IModalService) {
 
             todoService.list()
@@ -54,6 +55,10 @@ namespace ToDos {
             if (!item.due) return false;
             let due = moment.utc(item.due, '');
             return due.isBefore(moment.utc());
+        }
+
+        public inEditState() {
+            return this.$state.is('root.todos.edit');
         }
     }
 

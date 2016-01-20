@@ -5,7 +5,8 @@ namespace ToDos {
         'ui.bootstrap',
         'todos.filters',
         'todos.errors',
-        'todos.editors'
+        'todos.editors',
+        'todos.directives'
     ];
 
     export const listModule = angular.module('todos.list', deps);
@@ -20,6 +21,14 @@ namespace ToDos {
             // use controllerAs as ui.router doesn't support specifying this in the html - so we have coupling between name here and what we must use in html
             controllerAs: 'listCtrl',
             templateUrl: 'list/list.html'
+        });
+
+        $stateProvider.state({
+            name: 'root.todos.edit',
+            url: '/{id}',
+            controller: 'EditController',
+            controllerAs: 'editCtrl',
+            templateUrl: 'editors/edit.html'
         });
     });
 }

@@ -1,43 +1,56 @@
 <h2>Your ToDo List:</h2>
 
 <div class="container">
+
     <div class="row">
-        <div class="col-md-1 col-sm-2">
-            <button class="btn btn-success btn-sm" ng-click="listCtrl.addNew()">Add new</button>
-        </div>
-    </div>
-
-    <hr>
-
-    <div class="row" ng-repeat="item in listCtrl.todoList">
-        <div class="col-md-12">
-            <div class="panel {{!!item.done ? 'panel-success' : listCtrl.isOverdue(item) ? 'panel-danger' : 'panel-default'}}">
-                <div class="panel-body">
-                    {{item.text}}
+        <div ng-class="{'col-md-6': listCtrl.inEditState, 'col-md-12': !listCtrl.inEditState}">
+            <div class="row">
+                <div class="col-md-1 col-sm-2">
+                    <button class="btn btn-success btn-sm" ng-click="listCtrl.addNew()">Add new</button>
                 </div>
-                <div class="panel-footer">
-                    <!-- filters allow us to apply a filter to all values (e.g. transform the format of all dates) -->
-                    <!-- or to filter all values (e.g. get a subset of all dates) -->
-                    <!-- think of them as something you pipe things through -->
-                    <!-- in a binding expression we use '|' to pass a value to a filter -->
+            </div>
 
-                    <!-- date filter -->
-                    <!--Due: {{item.due | date : 'dd MM yyyy'}}-->
+            <hr>
 
-                    <!-- custom 'moment' filter -->
+            <div class="row" ng-repeat="item in listCtrl.todoList">
+                <div class="col-md-12">
+                    <div class="panel"
+                         class-switch="{'panel-success': !!item.done},
+                               {'panel-danger': listCtrl.isOverdue(item)},
+                                'panel-default'">
+                        <div class="panel-body">
+                            <a ui-sref=".edit({id: item.id})">{{item.text}}</a>
+                        </div>
+                        <div class="panel-footer">
+                            <!-- filters allow us to apply a filter to all values (e.g. transform the format of all dates) -->
+                            <!-- or to filter all values (e.g. get a subset of all dates) -->
+                            <!-- think of them as something you pipe things through -->
+                            <!-- in a binding expression we use '|' to pass a value to a filter -->
+
+                            <!-- date filter -->
+                            <!--Due: {{item.due | date : 'dd MM yyyy'}}-->
+
+                            <!-- custom 'moment' filter -->
                     <span ng-switch="!item.done">
                         <span ng-switch-when="true">Due: {{item.done | moment : 'short'}}</span>
                         <span ng-switch-default>Done: {{item.due | moment : 'short'}}</span>
                     </span>
-                    <div class="pull-right" ng-if="!item.done">
-                        <button class="btn btn-small btn-success" ng-click="listCtrl.markDone(item)">
-                            <i class="fa fa-check-circle"></i>
-                        </button>
+                            <div class="pull-right" ng-if="!item.done">
+                                <button class="btn btn-small btn-success" ng-click="listCtrl.markDone(item)">
+                                    <i class="fa fa-check-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                        </div>
                     </div>
-                </div>
-                <div class="panel-footer">
                 </div>
             </div>
         </div>
+
+        <div class="col-md-6" ng-if="listCtrl.inEditState">
+            <ui-view></ui-view>
+        </div>
     </div>
+
 </div>
