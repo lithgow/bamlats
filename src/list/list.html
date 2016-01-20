@@ -10,8 +10,8 @@
     <hr>
 
     <div class="row" ng-repeat="item in listCtrl.todoList">
-        <div class="col-md-10">
-            <div class="panel {{listCtrl.isOverdue(item) ? 'panel-danger' : 'panel-default'}}">
+        <div class="col-md-12">
+            <div class="panel {{!!item.done ? 'panel-success' : listCtrl.isOverdue(item) ? 'panel-danger' : 'panel-default'}}">
                 <div class="panel-body">
                     {{item.text}}
                 </div>
@@ -20,11 +20,24 @@
                     <!-- or to filter all values (e.g. get a subset of all dates) -->
                     <!-- think of them as something you pipe things through -->
                     <!-- in a binding expression we use '|' to pass a value to a filter -->
-                    Due: {{item.due | date : 'dd MM yyyy'}}
+
+                    <!--Due: {{item.due | date : 'dd MM yyyy'}}-->
+
+                    <!-- custom filter -->
+                        <!-- custom filter -->
+                    <div ng-show="!!item.done">
+                        Done: {{item.done | moment : 'short'}}
+                    </div>
+                    <div ng-hide="!!item.done">
+                        Due: {{item.due | moment : 'short'}}
+                    </div>
+                    <div class="pull-right" ng-if="!item.done">
+                        <button class="btn btn-small btn-success" ng-click="listCtrl.markDone(item)">
+                            <i class="fa fa-check-circle"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="panel-footer">
-                    <!-- custom filter -->
-                    Due: {{item.due | moment : 'short'}}
                 </div>
             </div>
         </div>

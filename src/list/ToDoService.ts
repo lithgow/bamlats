@@ -47,6 +47,15 @@ namespace ToDos {
                 this.$http.post<ToDoItem>('/api/todos', item)
                     .then(() => item));
         }
+
+        public markDone(item: ToDoItem) {
+            item.done = moment.utc().toISOString();
+
+            let url = '/api/todos/' + item.id;
+
+            return wrapError(this.$http.put<ToDoItem>(url, item)
+                .then(() => item));
+        }
     }
 
     // don't normally use 'Service' in the name (it's frowned upon) but sometimes, e.g. here, it's easier to distinguish that way
