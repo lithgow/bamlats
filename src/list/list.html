@@ -21,16 +21,12 @@
                     <!-- think of them as something you pipe things through -->
                     <!-- in a binding expression we use '|' to pass a value to a filter -->
 
+                    <!-- date filter -->
                     <!--Due: {{item.due | date : 'dd MM yyyy'}}-->
 
-                    <!-- custom filter -->
-                        <!-- custom filter -->
-                    <div ng-show="!!item.done">
-                        Done: {{item.done | moment : 'short'}}
-                    </div>
-                    <div ng-hide="!!item.done">
-                        Due: {{item.due | moment : 'short'}}
-                    </div>
+                    <!-- custom 'moment' filter -->
+                    <span ng-if="!!item.done">Done: {{item.done | moment : 'short'}}</span>
+                    <span ng-if="!item.done">Due: {{item.due | moment : 'short'}}</span>
                     <div class="pull-right" ng-if="!item.done">
                         <button class="btn btn-small btn-success" ng-click="listCtrl.markDone(item)">
                             <i class="fa fa-check-circle"></i>
