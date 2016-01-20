@@ -106,6 +106,31 @@ gulp watch
 filters allow us to apply a filter to all values (e.g. transform the format of all dates) or to filter all values (e.g. get a subset of all dates)
 
 
+## Day Three
+
+tsd install angular-ui-bootstrap --save
+
+truthy/falsey
+  falsey
+    false
+    0
+    null
+    undefined
+    ''
+    01 Jan 1970 (as javascript dates are in millis since epoch and so 01 Jan 1970 is 0, hence falsey)
+  truthy
+    everything else
+
+== uses type coercion
+0 == '0'
+hence we always use ===
+
+'' == false
+false == ''
+0 == false
+
+
+people sometimes use !! then a variable name to note that they know the thing isn't a boolean but they're treating it as a boolean (so you know they're aware the type coercion is happening)
 
 
 

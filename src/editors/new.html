@@ -1,0 +1,52 @@
+<form name="newTodo" novalidate>
+    <div class="modal-header">
+        <h3 class="modal-title">Add something to do</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="form-group">
+                <label for="name">What's to do?</label>
+                <input class="form-control" type="text" name="text" id="name" ng-model="newCtrl.todo.text" required maxlength="1024" autofocus>
+                <!-- model controller is created at the form level, using the form name. any input name is then a field on the model. -->
+                <div ng-messages="newTodo.text.$error" ng-if="newTodo.text.$touched">
+                    <!-- ng-if will be evaluated and when true angular will re-write that bit of the DOM -->
+                    <!-- in contrast, with ng-hide/ng-show the element will be there and the visiblility will be changed to none or to whatever it was when visible (block, inline, etc) -->
+                    <div ng-messages-include="new-todo-messages"></div>
+                    <!-- we put the ng-messages-include in its own div rather than on the ng-messages div above so that wit is included in the flow -->
+                    <!-- we can then, e.g. have an include for default messages, and other includes/divs for other messages -->
+                    <!-- ngMessages will only show the first error, in the order they're listed in the code - this can be overridden using ng-messages-multiple -->
+                    <span class="help-block" ng-message="maxlength">
+                        Keep it short (max (1024 characters)!
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-3">
+                    <label for="dueInDays" class="control-label">Due in:</label>
+                    <!-- can use ng-model-options attribute to delay angular re-evauating and rippling changes through the model (otherwise this happens every key stroke) -->
+                    <!-- updateOn (e.g. 'default blur') and debounce are the most useful settings -->
+                    <input class="form-control" type="number" name="dueInDays" id="dueInDays" ng-model="newCtrl.todo.dueInDays" required max="365" min="0">
+                    <div ng-messages="newTodo.dueInDays.$error" ng-if="newTodo.dueInDays.$touched">
+                        <div ng-messages-include="new-todo-messages"></div>
+                        <span class="help-block" ng-message="min, max">
+                            Please enter a value between 0 and 365.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <!-- type="submit" makes the form submissable by pressing enter -->
+        <button class="btn btn-primary" type="submit" ng-click="newCtrl.ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="$dismiss()">Cancel</button>
+    </div>
+</form>
+
+<script type="text/ng-template" id="new-todo-messages">
+    <span class="help-block" ng-message="required">
+        You have to enter something here!
+    </span>
+</script>

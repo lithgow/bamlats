@@ -2,8 +2,10 @@ namespace ToDos {
 
     var deps = [
         'ui.router',
+        'ui.bootstrap',
         'todos.filters',
-        'todos.errors'
+        'todos.errors',
+        'todos.editors'
     ];
 
     export const listModule = angular.module('todos.list', deps);
